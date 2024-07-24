@@ -27,4 +27,26 @@ public class RefPageService {
        return   refpagerepo.findAll();
 
     }
+
+    public List<RefPages> getallpagesParent(){
+        return   refpagerepo.findParentPages();
+
+    }
+    public List<RefPages> getallpagesSModule(){
+        return   refpagerepo.findSModule();
+
+    }
+    public List<RefPages> getpages(){
+        return   refpagerepo.findPages();
+
+    }
+
+    public List<RefPages> findPagesbyPrt(Long cdeprt){
+        return   refpagerepo.findPagesbyPrt(cdeprt);
+
+    }
+    public List<RefPages> findSModulebyPrt(Long cdeprt){
+        return   refpagerepo.findSModulebyPrt(cdeprt);
+
+    }
 }

@@ -23,14 +23,19 @@ public class RefPages implements Serializable {
     private Integer kuticreat ;
     private Integer kutimodif ;
 
+    private Long code_prt;
+    private String typePage ;
+
     public RefPages() {
     }
 
-    public RefPages(String libellepg, String goAction, Boolean status,Date datedebut,Date datefin) {
+    public RefPages(String libellepg, String goAction, Boolean status,Date datedebut,Date datefin,Long code_prt,String typePage) {
         Libellepg = libellepg;
         this.goAction = goAction;
         this.status = status;
         this.datedebut=datedebut;
         this.datefin=datefin;
+        this.code_prt = code_prt ;
+        this.typePage = typePage;
     }
 }
