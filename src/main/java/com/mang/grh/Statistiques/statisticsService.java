@@ -19,15 +19,17 @@ public class statisticsService {
     EmployeeRepo emplrepo ;
     @Autowired
     DemandeAutoRepo demauto ;
-    private final EntityManagerFactory entityManagerFactory;
+   // private final EntityManagerFactory entityManagerFactory;
 
-    @Autowired
+   /* @Autowired
     public statisticsService(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
-    }
+    }*/
 
     public List<statisticsEmplinsc>  getstatempinscr() {
-        List<statisticsEmplinsc> results = null;
+
+        return emplrepo.getstatempinscr();
+       /* List<statisticsEmplinsc> results = null;
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             String jpql = "SELECT new com.mang.grh.Statistiques.statisticsEmplinsc(" +
@@ -46,8 +48,8 @@ public class statisticsService {
 
         } finally {
             // entityManagerFactory.close();
-        }
-        return results;
+        }*/
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.mang.grh.Repositories;
 
 import com.mang.grh.Statistiques.Statempbyetatcivil;
+import com.mang.grh.Statistiques.statisticsEmplinsc;
 import com.mang.grh.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,13 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
     @Query("SELECT e.EtatCivil, COUNT(e) FROM Employee e GROUP BY e.EtatCivil")
     List<Object[]> countEmployeesByEtatCivil();
+
+
+    @Query("SELECT new com.mang.grh.Statistiques.statisticsEmplinsc(" +
+            "FUNCTION('YEAR', e.recruitmentdate)," +
+            "COUNT(e)  )  " +
+            "FROM Employee e " +
+            "GROUP BY FUNCTION('YEAR', e.recruitmentdate)")
+    public List<statisticsEmplinsc>  getstatempinscr() ;
+
 }
