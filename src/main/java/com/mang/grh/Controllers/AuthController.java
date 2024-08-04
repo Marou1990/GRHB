@@ -5,10 +5,12 @@ import com.mang.grh.Repositories.Registration.UserRepository;
 import com.mang.grh.Security.config.AuthRequest;
 import com.mang.grh.Security.config.AuthResponse;
 import com.mang.grh.Security.services.JwtService;
+import com.mang.grh.Security.services.UserDetailsImpl;
 import com.mang.grh.entities.Registration.ERole;
 import com.mang.grh.entities.Registration.Role;
 import com.mang.grh.entities.Registration.User;
 import com.mang.grh.payload.request.SignupRequest;
+import com.mang.grh.payload.response.JwtResponse;
 import com.mang.grh.payload.response.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -52,12 +57,23 @@ public class AuthController {
             System.out.println("Authentifier authentication.isAuthenticated() :: "+authentication.isAuthenticated());
             if(authentication.isAuthenticated()) {
                 //concatener le username avec le code de teledeclaration
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                List<String> roles = userDetails.getAuthorities().stream()
+                        .map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
+
                 Tokengenerated = jwtService.generateToken(authRequest.getUsername());
                 System.out.println("----- Tokengenerated ---- :: "+Tokengenerated);
                 AuthResponse response = new AuthResponse();
                 response.setStatus("OK");
                 response.setToken(Tokengenerated);
+                response.setId(userDetails.getId());
+                response.setEmail(userDetails.getEmail());
+                response.setRoles(roles);
+                response.setUsername(userDetails.getUsername());
                 return new ResponseEntity<AuthResponse>(response, HttpStatus.OK);
+
             }else {
                 System.out.println("Authentifier exception "+authentication.isAuthenticated());
                 throw new UsernameNotFoundException("Invalid User");

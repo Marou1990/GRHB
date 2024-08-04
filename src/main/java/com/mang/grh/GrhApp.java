@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class GrhApp implements CommandLineRunner {
 	@Autowired
 	EmployeeRepo er;
@@ -43,30 +45,30 @@ public class GrhApp implements CommandLineRunner {
 		Employee fourthemp = new  Employee("dd", "dd", 8, "06568003", "dd@yopmail.fr", "cite khadraa", null, new Date(), "celib", true);
 		er.save(firstemp);
 		er.save(secondemp);
-		er.save(fourthemp);*/
+		er.save(fourthemp);
 
 
 
 
 
-		/*ar.saveAll(Arrays.asList(
+		ar.saveAll(Arrays.asList(
 				new Autorisation(null, null, null, null, "auto ur", true, 1,firstemp)	,
 				new Autorisation(null, null, null, null, "auto ur", true, 1,fourthemp),
 				new Autorisation(null, null, null, null, "auto ur", true, 2,fourthemp)
-				));*/
+				));
 
 		Role roleuser = new Role(ERole.USER);
-		Role roleadmin = new Role(ERole.ADMIN);
+		//Role roleadmin = new Role(ERole.ADMIN);
 
 		rolerep.save(roleuser);
-		rolerep.save(roleadmin);
+		//rolerep.save(roleadmin);
 
 		User user = new User();
 		user.setUsername("marwen.1990");
 		user.setEmail("marwen.teyeb@gmail.com");
 		user.setPassword("$2a$10$ZlbJFrU3ixq912YmGBW9vuZ.KrsYHWWcE2LyZxgXgpZE/sdLpuo7u");
 		user.setRoles(new HashSet<>(rolerep.findAll()));
-		userrep.save(user);
+		userrep.save(user);*/
 		System.out.println("----------All Data saved into Database----------------------");
 	}
 	}
